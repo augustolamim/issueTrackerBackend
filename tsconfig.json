@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {   
+    "target": "es2017",                                  
+    "lib": ["ES6"],
+    "experimentalDecorators": true,                   
+    "emitDecoratorMetadata": true,
+    "sourceMap": true,    
+    "module": "commonjs",                                
+    "rootDir": ".",                                  
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/@types"
+    ],                                  
+    "resolveJsonModule": true,                        
+    "allowJs": true,                                  
+    "outDir": "./dist",                                   
+    "removeComments": true,                           
+    "esModuleInterop": true,                            
+    "forceConsistentCasingInFileNames": true,            
+    "skipLibCheck": true                                   
+  }
+}

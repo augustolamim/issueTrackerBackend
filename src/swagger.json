@@ -1,0 +1,1352 @@
+{
+    "openapi":"3.0.0",
+    "info":{
+        "title":"issueTracker",
+        "description": "Uma api para o acompanhamento e resolução de problemas",
+        "contact": {
+            "email": "augustocesarlamim@gmail.com",
+            "name": "augusto"
+        },
+        "version":"1.0.0"
+    },
+    "paths":{
+        "/session":{
+            "post":{
+                "tags": [
+                    "SessionController"
+                ],
+                "summary": "login do usuário",
+                "description": "Uma rota para efetuar o login do usuários",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "nickname",
+                        "schema": {
+                          "type": "string",                         
+                          "example": {
+                            "nickname": "usuarioTeste"
+                        }
+                        },
+                        "description": "Nickname do usuário cadastrado"
+                    },
+                    {
+                        "in": "body",
+                        "name": "password",
+                        "schema": {
+                          "type": "string",
+                          "example": {                            
+                            "password": "123456"
+                        }
+                        },
+                        "description": "Senha do usuário cadastrado"
+                    }
+                  ],
+                "requestBody": {
+                    "required": true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties":{
+                                    "nickname": {
+                                        "required":true,
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "required":true,
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "nickname": "usuarioTeste",
+                                    "password": "123456"
+                                }
+                            }
+
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login efetuado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",                                    
+                                    "properties":{
+                                        "user":{
+                                            "type":"object",
+                                            "properties":{
+                                                "nickname":{
+                                                    "type": "string"
+                                                },
+                                                "password":{
+                                                    "type": "string"
+                                                },
+                                                "role": {
+                                                    "type": "string"
+                                                },
+                                                "token": {
+                                                    "type": "string"
+                                                },
+                                                "refreshToken":{
+                                                    "type":"object",
+                                                    "properties":{
+                                                        "id":{
+                                                            "type": "string"
+                                                        },
+                                                        "expiresIn":{
+                                                            "type": "integer"
+                                                        },
+                                                        "userId": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }                                        
+                                    },
+                                    "example": {
+                                        "user": {
+                                            "id": "b4557c2a-f4a0-4e09-ad00-ca2c6c24b03e",
+                                            "nickname": "usuarioTeste",
+                                            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI0NTU3YzJhLWY0YTAtNGUwOS1hZDAwLWNhMmM2YzI0YjAzZSIsInJvbGUiOiJTY3J1bSBtYXN0ZXIiLCJpYXQiOjE2NTQwMDI2ODEsImV4cCI6MTY1NDYwNzQ4MX0.cRUB9MDwd4tdHrWtFf-MqKapAwP2aLot1bBE_AboE5Y",
+                                            "refreshtoken": {
+                                                "id": "6e882140-6a0a-4774-92c9-b77eaa55cedf",
+                                                "expiresIn": 1655298681,
+                                                "userId": "b4557c2a-f4a0-4e09-ad00-ca2c6c24b03e"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "error":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "error": "Usuário não encontrado."                                        
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description": "Error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "error":{
+                                            "type": "string"
+                                        },
+                                        "stack":{
+                                            "type": "string"
+                                        },
+                                        "local":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "error": "Ocorreu um erro ao gerar a autenticação.",
+                                        "stack": "Error with file SessionController in line 222",
+                                        "local": "session.store"                                       
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete":{
+                "tags":[
+                    "SessionController"
+                ],
+                "summary": "Logout do usuário",
+                "description":"Efetua o logout do usuário",
+                "responses":{
+                      "200":{
+                          "description": "logout efetuado com sucesso",
+                          "content":{
+                              "application/json":{
+                                  "schema":{
+                                      "type":"object",
+                                      "properties":{                                        
+                                        "msg":{
+                                            "type":"string"                                            
+                                        }
+                                    },
+                                    "example": [
+                                        {
+                                            "msg": "Logout com sucesso."
+                                        }
+                                    ]
+                                  }
+                              }
+                          }
+                      },
+                    "500":{
+                        "description": "Error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "error":{
+                                            "type": "string"
+                                        },
+                                        "stack":{
+                                            "type": "string"
+                                        },
+                                        "local":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "error": "Ocorreu um erro ao realizar o logout.",
+                                        "stack": "Error with file SessionController in line 322",
+                                        "local": "session.logout"                                       
+                                    }
+                                }
+                            }
+                        }
+                    }
+                  }
+            }
+        },
+        "/session/refresh":{
+            "post":{
+                "tags": [
+                    "SessionController"
+                ],
+                "summary": "Refresh login token",
+                "description": "Uma rota para efetuar o refresh do token de login",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "refreshTokenId",
+                        "schema": {
+                          "type": "string",                         
+                          "example": {
+                            "refreshTokenId":"e26eebbf-ade6-43d5-84b8-7db53d218e86"
+                        }
+                        },
+                        "description": "Id do refresh token do usuário logado"
+                    }
+                  ],
+                "requestBody": {
+                    "required": true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties":{
+                                    "refreshTokenId": {
+                                        "required":true,
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "refreshTokenId":"e26eebbf-ade6-43d5-84b8-7db53d218e86"
+                                }
+                            }
+
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Refresh do token efetuado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",                                    
+                                    "properties":{
+                                        "user":{
+                                            "type":"object",
+                                            "properties":{                                                
+                                                "token": {
+                                                    "type": "string"
+                                                },
+                                                "refreshToken":{
+                                                    "type":"object",
+                                                    "properties":{
+                                                        "id":{
+                                                            "type": "string"
+                                                        },
+                                                        "expiresIn":{
+                                                            "type": "integer"
+                                                        },
+                                                        "userId": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }                                        
+                                    },
+                                    "example": {                                      
+                                            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI0NTU3YzJhLWY0YTAtNGUwOS1hZDAwLWNhMmM2YzI0YjAzZSIsInJvbGUiOiJTY3J1bSBtYXN0ZXIiLCJpYXQiOjE2NTQwMDI2ODEsImV4cCI6MTY1NDYwNzQ4MX0.cRUB9MDwd4tdHrWtFf-MqKapAwP2aLot1bBE_AboE5Y",
+                                            "refreshtoken": {
+                                                "id": "6e882140-6a0a-4774-92c9-b77eaa55cedf",
+                                                "expiresIn": 1655298681,
+                                                "userId": "b4557c2a-f4a0-4e09-ad00-ca2c6c24b03e"
+                                            }                                        
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "error":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "error": "Refresh token invalído."                                        
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description": "Error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "error":{
+                                            "type": "string"
+                                        },
+                                        "stack":{
+                                            "type": "string"
+                                        },
+                                        "local":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "error": "Ocorreu um erro ao gerar novo token.",
+                                        "stack": "Error with file RefreshController in line 58",
+                                        "local": "refreshToken.refresh"                                       
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users":{
+            "post":{
+                "tags": [
+                    "UserController"
+                ],
+                "summary": "Cadastrar usuário",
+                "description": "Uma rota para cadastro de novos usuários",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "nickname",
+                        "schema": {
+                          "type": "string",                         
+                          "example": {
+                            "nickname": "usuarioTeste"
+                        }
+                        },
+                        "description": "Nickname do usuário cadastrado"
+                    },
+                    {
+                        "in": "body",
+                        "name": "password",
+                        "schema": {
+                          "type": "string",
+                          "example": {                            
+                            "password": "123456"
+                        }
+                        },
+                        "description": "Senha do usuário cadastrado"
+                    },
+                    {
+                      "in": "body",
+                      "name": "role",
+                      "schema": {
+                        "type": "string",
+                        "enum": ["Scrum master", "QA Tester", "Developer"],
+                        "example": {                            
+                            "role": "Scrum master"
+                        }
+                      },
+                      "description": "Nivel de acesso dos usuários buscados"
+                    }
+                  ],
+                "requestBody": {
+                    "required": true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties":{
+                                    "nickname": {
+                                        "required":true,
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "required":true,
+                                        "type": "string"
+                                    },
+                                    "role": {
+                                        "required":true,
+                                        "type": "string",
+                                        "enum": ["Scrum master", "QA Tester", "Developer"]
+                                    }
+                                },
+                                "example": {
+                                    "nickname": "usuarioTeste",
+                                    "password": "123456",
+                                    "role": "Scrum master"
+                                }
+                            }
+
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Criado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",                                    
+                                    "properties":{
+                                        "user":{
+                                            "type":"object",
+                                            "properties":{
+                                                "nickname":{
+                                                    "type": "string"
+                                                },
+                                                "password":{
+                                                    "type": "string"
+                                                },
+                                                "role": {
+                                                    "type": "string"
+                                                },
+                                                "token": {
+                                                    "type": "string"
+                                                },
+                                                "refreshToken":{
+                                                    "type":"object",
+                                                    "properties":{
+                                                        "id":{
+                                                            "type": "string"
+                                                        },
+                                                        "expiresIn":{
+                                                            "type": "integer"
+                                                        },
+                                                        "userId": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }                                        
+                                    },
+                                    "example": {
+                                        "user": {
+                                            "id": "b4557c2a-f4a0-4e09-ad00-ca2c6c24b03e",
+                                            "nickname": "usuarioTeste",
+                                            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI0NTU3YzJhLWY0YTAtNGUwOS1hZDAwLWNhMmM2YzI0YjAzZSIsInJvbGUiOiJTY3J1bSBtYXN0ZXIiLCJpYXQiOjE2NTQwMDI2ODEsImV4cCI6MTY1NDYwNzQ4MX0.cRUB9MDwd4tdHrWtFf-MqKapAwP2aLot1bBE_AboE5Y",
+                                            "refreshtoken": {
+                                                "id": "6e882140-6a0a-4774-92c9-b77eaa55cedf",
+                                                "expiresIn": 1655298681,
+                                                "userId": "b4557c2a-f4a0-4e09-ad00-ca2c6c24b03e"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "error":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "error": "Usuário já existe."                                        
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description": "Error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "error":{
+                                            "type": "string"
+                                        },
+                                        "stack":{
+                                            "type": "string"
+                                        },
+                                        "local":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "error": "Ocorreu um erro ao salvar os dados.",
+                                        "stack": "Error with file UserController in line 222",
+                                        "local": "users.store"                                       
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get":{
+                "tags":[
+                    "UserController"
+                ],
+                "summary": "Busca por usuarios",
+                "description":"Busca por usuarios filtrando entre os niveis de acesso: Scrum master, QA tester, Developer",
+                "parameters": [
+                    {
+                      "in": "query",
+                      "name": "role",
+                      "schema": {
+                        "type": "string",
+                        "enum": ["Scrum master", "QA Tester", "Developer"]
+                      },
+                      "description": "Nivel de acesso dos usuarios buscados"
+                    }
+                  ],
+                  "responses":{
+                      "200":{
+                          "description": "Lista de usuarios",
+                          "content":{
+                              "application/json":{
+                                  "schema":{
+                                      "type":"object",
+                                      "properties":{                                        
+                                        "users":{
+                                            "type":"object",
+                                            "properties":{
+                                                "id":{
+                                                    "type": "string"
+                                                },
+                                                "nickname":{
+                                                    "type": "string"
+                                                },
+                                                "role": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "example": [
+                                        {
+                                            "users": [
+                                                {
+                                                    "id": "b03c5194-5c2c-44d3-aef8-db66a8276a07",
+                                                    "nickname": "usuarioTeste3",
+                                                    "role": "Developer"
+                                                },
+                                                {
+                                                    "id": "2f06e86d-02c1-41a2-94b9-0c9c1f6dd521",
+                                                    "nickname": "usuarioTeste5",
+                                                    "role": "Developer"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                  }
+                              }
+                          }
+                      },
+                      "400":{
+                          "description": "Error",
+                          "content":{
+                              "application/json":{
+                                  "schema":{
+                                      "type":"object",
+                                      "properties":{
+                                          "error":{
+                                              "type": "object"
+                                          }
+                                      },
+                                      "example": {
+                                        "error": {
+                                            "value": {
+                                                "testewrongquery": "abcdef"
+                                            },
+                                            "path": "role",
+                                            "type": "required",
+                                            "errors": [
+                                                "role is a required field"
+                                            ],
+                                            "params": {
+                                                "path": "role"
+                                            },
+                                            "inner": [],
+                                            "name": "ValidationError",
+                                            "message": "role is a required field"
+                                        }
+                                    }
+                                  }
+                              }
+                          }
+                      },
+                    "500":{
+                        "description": "Error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "error":{
+                                            "type": "string"
+                                        },
+                                        "stack":{
+                                            "type": "string"
+                                        },
+                                        "local":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "error": "There was an error when loading the data.",
+                                        "stack": "Cannot select from table users",
+                                        "local": "users.getByRole"                                       
+                                    }
+                                }
+                            }
+                        }
+                    }
+                  }
+            }
+        },        
+        "/issues":{
+            "post":{
+                "tags": [
+                    "IssueController"
+                ],
+                "summary": "Cadastrar Problema",
+                "description": "Uma rota para cadastro de novos problemas",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "title",
+                        "schema": {
+                          "type": "string",                         
+                          "example": {
+                            "title": "Problema Teste"
+                        }
+                        },
+                        "description": "Título do problema cadastrado"
+                    },
+                    {
+                        "in": "body",
+                        "name": "version",
+                        "schema": {
+                          "type": "string",
+                          "example": {                            
+                            "version": "0.5a"
+                        }
+                        },
+                        "description": "Versão atual do probelma cadastrado"
+                    },
+                    {
+                        "in": "body",
+                        "name": "description",
+                        "schema": {
+                          "type": "string",
+                          "example": {                            
+                            "description": "Existe um Problema teste causando um erro"
+                        }
+                        },
+                        "description": "Descrição do problema cadastrado"
+                    },
+                    {
+                        "in": "body",
+                        "name": "issueDeveloperId",
+                        "schema": {
+                          "type": "string",
+                          "example": {                            
+                            "version": "d2047a25-ba96-4a5e-8864-0d71d98f04d4"
+                        }
+                        },
+                        "description": "Id do usuario atribuido ao problema cadastrado"
+                    },
+                    {
+                      "in": "body",
+                      "name": "priority",
+                      "schema": {
+                        "type": "string",
+                        "enum": ["Baixa", "Normal", "Alta"],
+                        "example": {                            
+                            "description": "Baixa"
+                        }
+                      },
+                      "description": "Prioridade do problema cadastrado"
+                    }
+                  ],
+                "requestBody": {
+                    "required": true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties":{
+                                    "title": {
+                                        "required":true,
+                                        "type": "string"
+                                    },
+                                    "version": {
+                                        "required":true,
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "required":true,
+                                        "type": "string"
+                                    },
+                                    "issueDeveloperId": {
+                                        "required":true,
+                                        "type": "string"
+                                    },
+                                    "priority": {
+                                        "required":true,
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "title": "Problema Teste",
+                                    "version": "versão 0.5",
+                                    "description": "Existe um Problema teste causando um erro",
+                                    "issueDeveloperId": "d2047a25-ba96-4a5e-8864-0d71d98f04d4",
+                                    "priority": "Alta"
+                                }
+                            }
+
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Criada com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "issue":{
+                                            "type":"object",
+                                            "properties":{
+                                                "id":{
+                                                    "type": "integer"
+                                                },
+                                                "title":{
+                                                    "type": "string"
+                                                },
+                                                "version": {
+                                                    "type": "string"
+                                                },
+                                                "issueDeveloperId": {
+                                                    "type": "string"
+                                                },
+                                                "issueCreatorId":{
+                                                    "type": "string"
+                                                },
+                                                "priority": {
+                                                    "type": "string"
+                                                },
+                                                "description": {
+                                                    "type": "string"
+                                                },
+                                                "createdAt": {
+                                                    "type": "string"
+                                                },
+                                                "updatedAt": {
+                                                    "type": "string"
+                                                }
+                                                ,
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }                                       
+                                    },
+                                    "example": {
+                                        "issue": {
+                                            "id": 1,
+                                            "title": "Problema Teste",
+                                            "version": "versão 0.5",
+                                            "issueDeveloperId": "d2047a25-ba96-4a5e-8864-0d71d98f04d4",
+                                            "issueCreatorId": "34947ba6-d3ae-4b2e-b475-5b23b3d6e8e6",
+                                            "priority": "Alta",
+                                            "description": "Existe um Problema teste causando um erro",
+                                            "createdAt": "2022-05-31T14:10:34.733Z",
+                                            "updatedAt": "2022-05-31T14:10:34.734Z",
+                                            "status": "Novo"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "error":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "error": "Requisição inválida."                                        
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description": "Error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "error":{
+                                            "type": "string"
+                                        },
+                                        "stack":{
+                                            "type": "string"
+                                        },
+                                        "local":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "error": "Ocorreu um erro ao salvar os dados.",
+                                        "stack": "Error with file IssueController in line 222",
+                                        "local": "issues.store"                                       
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },            
+            "get":{
+                "tags":[
+                    "IssueController"
+                ],
+                "summary": "Busca pelos problemas",
+                "description":"Busca todos os problemas cadastrados",                
+                  "responses":{
+                      "200":{
+                          "description": "Lista de problemas",
+                          "content":{
+                              "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{                                        
+                                      "issues":{
+                                          "type":"object",
+                                          "properties":{
+                                              "id":{
+                                                  "type": "integer"
+                                                },
+                                                "title":{
+                                                    "type": "string"
+                                                },
+                                                "version": {
+                                                    "type": "string"
+                                                },
+                                                "issueDeveloperId":{
+                                                    "type": "string"
+                                                },
+                                                "issueCreatorId":{
+                                                    "type": "string"
+                                                },
+                                                "priority": {
+                                                    "type": "string"
+                                                },
+                                                "description":{
+                                                    "type": "string"
+                                                },
+                                                "createdAt":{
+                                                    "type": "string"
+                                                },
+                                                "updatedAt": {
+                                                    "type": "string"
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                }                                              
+                                          }
+                                      }
+                                  },
+                                  "example": [
+                                      {
+                                        "issues": [
+                                            {
+                                                "id": 1,
+                                                "title": "Problema Teste",
+                                                "version": "versão 0.5",
+                                                "issueDeveloperId": "d2047a25-ba96-4a5e-8864-0d71d98f04d4",
+                                                "issueCreatorId": "34947ba6-d3ae-4b2e-b475-5b23b3d6e8e6",
+                                                "priority": "Alta",
+                                                "description": "Existe um Problema teste causando um erro",
+                                                "createdAt": "2022-05-31T14:10:34.733Z",
+                                                "updatedAt": "2022-05-31T14:10:34.734Z",
+                                                "status": "Novo"
+                                            },
+                                            {
+                                                "id": 2,
+                                                "title": "Problema Teste2",
+                                                "version": "versão 1",
+                                                "issueDeveloperId": "d2047a25-ba96-4a5e-8864-0d71d98f04d4",
+                                                "issueCreatorId": "34947ba6-d3ae-4b2e-b475-5b23b3d6e8e6",
+                                                "priority": "Baixa",
+                                                "description": "Existe um Problema teste causando erro",
+                                                "createdAt": "2022-05-31T16:45:02.142Z",
+                                                "updatedAt": "2022-05-31T16:45:02.143Z",
+                                                "status": "Novo"
+                                            }
+                                        ]
+                                      }
+                                  ]
+                                }
+                              }
+                          }
+                      },
+                    "500":{
+                        "description": "Error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "error":{
+                                            "type": "string"
+                                        },
+                                        "stack":{
+                                            "type": "string"
+                                        },
+                                        "local":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "error": "Ocorreu um erro ao carregar os dados.",
+                                        "stack": "Error with file IssueController in line 456",
+                                        "local": "issues.getAll"                                       
+                                    }
+                                }
+                            }
+                        }
+                    }
+                  }
+            }
+        },                
+        "/issues/{issueId}":{            
+            "put":{
+                "tags": [
+                    "IssueController"
+                ],
+                "summary": "Atualiza um problema",
+                "description": "Atualiza a informação de um problema cadastrado",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "issueId",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Id do problema a ser atualizado"
+                    },
+                    {
+                        "in": "body",
+                        "name": "title",
+                        "schema": {
+                          "type": "string",                         
+                          "example": {
+                            "title": "Problema Teste"
+                        }
+                        },
+                        "description": "Título do problema a ser atualizado"
+                    },
+                    {
+                        "in": "body",
+                        "name": "version",
+                        "schema": {
+                          "type": "string",
+                          "example": {                            
+                            "version": "0.5a"
+                        }
+                        },
+                        "description": "Versão atual do probelma a ser atualizado"
+                    },
+                    {
+                        "in": "body",
+                        "name": "description",
+                        "schema": {
+                          "type": "string",
+                          "example": {                            
+                            "description": "Existe um Problema teste causando um erro"
+                        }
+                        },
+                        "description": "Descrição do problema a ser atualizado"
+                    },
+                    {
+                        "in": "body",
+                        "name": "issueDeveloperId",
+                        "schema": {
+                          "type": "string",
+                          "example": {                            
+                            "version": "d2047a25-ba96-4a5e-8864-0d71d98f04d4"
+                        }
+                        },
+                        "description": "Id do usuario atribuido ao problema a ser atualizado"
+                    },
+                    {
+                      "in": "body",
+                      "name": "priority",
+                      "schema": {
+                        "type": "string",
+                        "enum": ["Baixa", "Normal", "Alta"],
+                        "example": {                            
+                            "priority": "Baixa"
+                        }
+                      },
+                      "description": "Prioridade do problema a ser atualizado"
+                    },
+                    {
+                        "in": "body",
+                        "name": "status",
+                        "schema": {
+                          "type": "string",
+                          "enum": ["Aprovado", "Reprovado", "Não será Removido", "Duplicado", "Não é erro", "Resolvido"],
+                          "example": {                            
+                              "status": "Aprovado"
+                          }
+                        },
+                        "description": "Status do problema a ser atualizado"
+                      }
+                  ],
+                "requestBody": {                    
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"object",
+                                "properties":{
+                                    "issueUpdated":{
+                                        "type":"object",
+                                        "properties":{
+                                            "title":{
+                                                "type": "string"
+                                            },
+                                            "version": {
+                                                "type": "string"
+                                            },
+                                            "issueDeveloperId": {
+                                                "type": "string"
+                                            },
+                                            "priority": {
+                                                "type": "string"
+                                            },
+                                            "description": {
+                                                "type": "string"
+                                            },
+                                            "status": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }                                   
+                                    
+                                },
+                                "example": {
+                                    "title": "Problema Teste2 atualizado",
+                                    "version": "versão 1.5",
+                                    "issueDeveloperId": "d2047a25-ba96-4a5e-8864-0d71d98f04d4",	
+                                    "priority": "Normal",
+                                    "description": "Existe um Problema teste causando erro",	
+                                    "status": "Aprovado"
+                                }
+                            }
+
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Problema atualizado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "issueUpdated":{
+                                            "type":"object",
+                                            "properties":{
+                                                "id":{
+                                                    "type": "integer"
+                                                },
+                                                "title":{
+                                                    "type": "string"
+                                                },
+                                                "version": {
+                                                    "type": "string"
+                                                },
+                                                "issueDeveloperId": {
+                                                    "type": "string"
+                                                },
+                                                "issueCreatorId":{
+                                                    "type": "string"
+                                                },
+                                                "priority": {
+                                                    "type": "string"
+                                                },
+                                                "description": {
+                                                    "type": "string"
+                                                },
+                                                "createdAt": {
+                                                    "type": "string"
+                                                },
+                                                "updatedAt": {
+                                                    "type": "string"
+                                                },
+                                                "status": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }                                       
+                                        
+                                    },
+                                    "example": {
+                                        "issueUpdated": {
+                                            "id": 2,
+                                            "title": "Problema Teste2 atualizado",
+                                            "version": "versão 1.5",
+                                            "issueDeveloperId": "d2047a25-ba96-4a5e-8864-0d71d98f04d4",
+                                            "issueCreatorId": "34947ba6-d3ae-4b2e-b475-5b23b3d6e8e6",
+                                            "priority": "Normal",
+                                            "description": "Existe um Problema teste causando erro",
+                                            "createdAt": "2022-05-31T16:45:02.142Z",
+                                            "updatedAt": "2022-05-31T17:40:16.126Z",
+                                            "status": "Aprovado"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "error":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "error": "Problema não encontrado."                                        
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403":{
+                        "description": "Error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "error":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "error": "Não é autorizado."                                        
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description": "Error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "error":{
+                                            "type": "string"
+                                        },
+                                        "stack":{
+                                            "type": "string"
+                                        },
+                                        "local":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "error": "Ocorreu um erro ao atualizar os dados.",
+                                        "stack": "Typeerror: cannot assign string to number",
+                                        "local": "issues.update"                                       
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },        
+        "/issues/delete":{
+            "post":{
+                "tags": [
+                    "IssueController"
+                ],
+                "summary": "Deletar problemas",
+                "description": "Uma rota para deletar problemas selecionados",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "idsToDelete",
+                        "schema": {
+                          "type": "array",
+                          "items":{
+                              "type":"integer"
+                          },                         
+                          "example": {
+                            "idsToDelete": [1,2]
+                        }
+                        },
+                        "description": "Ids de problemas a serem deletados"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties":{
+                                    "IdsToDelete": {
+                                        "required":true,
+                                        "type": "array",
+                                        "items":{
+                                            "type":"integer"
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "IdsToDelete": [1,2]
+                                }
+                            }
+
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Deletado com sucesso",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "msg":{
+                                            "type":"string"                                            
+                                        }
+                                    },
+                                    "example": {
+                                        "msg": "Problemas Deletados com sucesso."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "error":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "error": "Requisição inválida."                                        
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description": "Error",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "properties":{
+                                        "error":{
+                                            "type": "string"
+                                        },
+                                        "stack":{
+                                            "type": "string"
+                                        },
+                                        "local":{
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "error": "Ocorreu um erro ao deletar os dados.",
+                                        "stack": "Error with file IssueController in line 222",
+                                        "local": "issues.delete"                                       
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

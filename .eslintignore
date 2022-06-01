@@ -1,0 +1,5 @@
+dist
+.vscode
+.eslintrc.js
+/*.js
+src/@types

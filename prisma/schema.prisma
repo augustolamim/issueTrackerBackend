@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+
+  id String @id @default(uuid())  
+
+  issueCreator Issue[] @relation("issueCreator")
+
+  issueDeveloper Issue[] @relation("issueDeveloper")
+
+  refreshToken RefreshToken?
+
+  nickname String @unique 
+
+  role String
+  
+  password String
+  
+}
+
+model Issue {
+
+  id Int @id @default(autoincrement())
+
+  issueCreator User @relation("issueCreator",fields: [issueCreatorId], references: [id]) 
+
+  issueDeveloper User @relation("issueDeveloper",fields: [issueDeveloperId], references: [id]) 
+
+  title String
+
+  version String
+
+  issueDeveloperId String
+
+  issueCreatorId String
+
+  priority String
+
+  description String
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  status String @default("Novo")
+
+}
+
+model RefreshToken {
+
+  id String @id @default(uuid())
+
+  expiresIn Int
+
+  user User @relation(fields: [userId], references: [id]) 
+
+  userId String
+}
