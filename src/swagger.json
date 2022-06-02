@@ -15,7 +15,7 @@
                 "tags": [
                     "SessionController"
                 ],
-                "summary": "login do usuário",
+                "summary": "Login do usuário",
                 "description": "Uma rota para efetuar o login do usuários",
                 "parameters": [
                     {
