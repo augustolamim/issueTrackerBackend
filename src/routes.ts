@@ -1,6 +1,5 @@
 
 import { Router } from 'express'
-import cors from 'cors'
 import SessionController from './controllers/SessionController'
 import UserController from './controllers/UserController'
 import IssueController from './controllers/IssueController'
@@ -14,13 +13,8 @@ import authQAtesterMiddleware from './middleware/authQAtester'
 import swaggerUi from 'swagger-ui-express'
 import swaggerFile from './swagger.json'
 
-const options: cors.CorsOptions = {
-
-}
-
 const routes = Router()
 
-routes.use(cors(options))
 // Api documentation
 routes.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
@@ -43,6 +37,5 @@ routes.post('/issues', ValidateYup(Schemas.issueStore), IssueController.store)
 routes.use(authScrumMasterMiddleware)
 // routes for role Scrum master
 routes.post('/issues/delete', ValidateYup(Schemas.issueDelete), IssueController.delete)
-routes.options('*', cors(options))
 
 export default routes
