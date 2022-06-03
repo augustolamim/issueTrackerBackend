@@ -24,7 +24,7 @@ class SessionController {
         }
 
         if (!await bcrypt.compare(password, user.password)) {
-          return res.status(401).json({ error: 'Senha incorreta.' })
+          return res.status(400).json({ error: 'Senha incorreta.' })
         }
         const id:string = user.id
         const role:string = user.role
