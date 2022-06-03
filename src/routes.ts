@@ -43,12 +43,13 @@ routes.post('/session/refresh', ValidateYup(Schemas.sessionRefreshToken), Sessio
 routes.use(authMiddleware)
 // routes for roles Scrum master || QA tester || Developer
 routes.delete('/session', SessionController.logout)
+routes.get('/users', ValidateYup(Schemas.userQuery), UserController.getByRole)
 routes.get('/issues', IssueController.getAll)
 routes.put('/issues/:issueId', ValidateYup(Schemas.issueUpdate), IssueController.update)
 
 routes.use(authQAtesterMiddleware)
 // routes for roles Scrum master || QA tester
-routes.get('/users', ValidateYup(Schemas.userQuery), UserController.getByRole)
+
 routes.post('/issues', ValidateYup(Schemas.issueStore), IssueController.store)
 
 routes.use(authScrumMasterMiddleware)
