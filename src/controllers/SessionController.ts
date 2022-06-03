@@ -33,7 +33,7 @@ class SessionController {
         const generateRefreshToken = new GenerateRefreshToken()
         const refreshtoken = await generateRefreshToken.execute(id)
         return res.status(200).json({
-          user: { id, nickname, token, refreshtoken }
+          user: { id, nickname, role, token, refreshtoken }
         })
     } catch (error) {
       return res.status(500).json({
