@@ -25,7 +25,7 @@ const options: cors.CorsOptions = {
   ],
   credentials: true,
   methods: 'GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE',
-  origin: 'http://localhost:3000',
+  origin: 'https://6299f1ce24c5bb61e8d2ac87--dapper-strudel-501778.netlify.app/',
   preflightContinue: false
 }
 
