@@ -57,9 +57,7 @@ class UserController {
       const role:string = req.query.role as string
       const users = await prisma.user.findMany({
         where: {
-          role: {
-            contains: role
-          }
+          role
         },
         select: {
           id: true,
