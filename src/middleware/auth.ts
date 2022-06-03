@@ -8,7 +8,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization
 
   if (!authHeader) {
-    return res.status(401).json({ error: 'Token não recebido.' })
+    return res.status(400).json({ error: 'Token não recebido.' })
   }
 
   const [, token] = authHeader.split(' ')
