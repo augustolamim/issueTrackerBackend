@@ -88,8 +88,8 @@ class IssueController {
       if (issue.issueCreatorId !== userId && (title || version || description || issueDeveloperId || priority)) {
         return res.status(403).json({ error: 'Não é autorizado.' })
       }
-      // only the developer responsible for the issue can change its status to one of the allowed values, !=Aprovado && Reprovado
-      if (role === 'Developer' && (issue.issueDeveloperId !== userId || ['Aprovado', 'Reprovado'].includes(status))) {
+      //  a developer can change its status to one of the allowed values, !=Aprovado && Reprovado
+      if (role === 'Developer' && (['Aprovado', 'Reprovado'].includes(status))) {
         return res.status(403).json({ error: 'Não é autorizado.' })
       }
       // scrum master and qa tester cant change status to the following fields unless they are the issueCreator
