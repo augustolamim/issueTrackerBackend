@@ -6,7 +6,12 @@ const prisma = new PrismaClient()
 class IssueController {
   static async getAll (req: Request, res: Response): Promise<object> {
     try {
-      const issues = await prisma.issue.findMany()
+      const issues = await prisma.issue.findMany({
+        include: {
+          issueCreator: true,
+          issueDeveloper: true
+        }
+      })
 
       return res.status(200).json({
         issues
